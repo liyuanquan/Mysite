@@ -10,28 +10,29 @@ from django.template import loader
 # Create your views here.
 
 
-# class IndexView(generic.ListView):
-#     #latest_question_list = Question.objects.order_by("-pub_date")[:5]
-#     template_name = "./polls/index.html"
-#     context_object_name = 'latest_question_list'
-#
-#     def get_queryset(self):
-#         """Return the last five published questions"""
-#         return Question.objects.order_by('-pub_date')[:5]
-#     # context = {
-#     #     "latest_question_list":latest_question_list,
-#     # }
-#     # #out_put = ",".join([q.question_text for q in latest_question_list])
-#     # return render(request, "./polls/index.html", context=context)
+class IndexView(generic.ListView):
+    #latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    template_name = "./polls/index.html"
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions"""
+        return Question.objects.order_by('-pub_date')[:5]
+    # context = {
+    #     "latest_question_list":latest_question_list,
+    # }
+    # #out_put = ",".join([q.question_text for q in latest_question_list])
+    # return render(request, "./polls/index.html", context=context)
 
 
-def index(request):
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    print latest_question_list
-    context = {
-         "latest_question_list": latest_question_list,
-     }
-    return render(request, "./polls/index.html", context=context)
+# def index(request):
+#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+#     print latest_question_list
+#     context = {
+#          "latest_question_list": latest_question_list,
+#      }
+#     return render(request, "./polls/index.html", context=context)
+
 
 class ResultsView(generic.DetailView):
     model = Question
@@ -67,4 +68,4 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse("polls:results", arges=(question.id, )))
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id, )))
